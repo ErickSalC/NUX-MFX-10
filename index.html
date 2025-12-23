@@ -62,11 +62,20 @@
     }
     .artist-card h3 {
       color: var(--link);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+    .artist-card .genre-icon {
+      font-size: 20px;
+      margin-bottom: 6px;
+      display: block;
+      color: #bbb;
     }
     section {
       margin-bottom: 50px;
       display: none;
+      border-top: 3px solid var(--link);
+      padding-top: 20px;
     }
     section.active {
       display: block;
@@ -81,6 +90,7 @@
     }
     .section-header h2 {
       color: var(--link);
+      font-size: 24px;
     }
     .back-btn {
       background: none;
@@ -135,9 +145,39 @@
       margin-top: 30px;
       border-top: 1px solid var(--border);
     }
+
+    /* Botón flotante */
+    .floating-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--link);
+      color: white;
+      border: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+      display: none;
+      z-index: 1000;
+    }
+    .floating-btn:hover {
+      background: #388E3C;
+      transform: scale(1.1);
+    }
+
     @media (max-width: 600px) {
       .artist-grid {
         grid-template-columns: 1fr;
+      }
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .section-header .back-btn {
+        margin-top: 10px;
       }
     }
   </style>
@@ -153,52 +193,66 @@
 <!-- MENÚ PRINCIPAL -->
 <div class="artist-grid" id="artistMenu">
   <div class="artist-card" onclick="showSection('blink')">
+    <span class="genre-icon">🎸</span>
     <h3>Blink-182</h3>
     <p>Tom DeLonge Style</p>
   </div>
   <div class="artist-card" onclick="showSection('greenDay')">
+    <span class="genre-icon">🌱</span>
     <h3>Green Day</h3>
     <p>September Ends</p>
   </div>
   <div class="artist-card" onclick="showSection('audioslave')">
+    <span class="genre-icon">🔥</span>
     <h3>Audioslave</h3>
     <p>Like a Stone</p>
   </div>
   <div class="artist-card" onclick="showSection('avenged')">
+    <span class="genre-icon">🤘</span>
     <h3>Avenged Sevenfold</h3>
     <p>Bat Country, Hail to the King...</p>
   </div>
   <div class="artist-card" onclick="showSection('soad')">
+    <span class="genre-icon">⚔️</span>
     <h3>System of a Down</h3>
     <p>Chop Suey!, Toxicity</p>
   </div>
   <div class="artist-card" onclick="showSection('paparoch')">
+    <span class="genre-icon">💢</span>
     <h3>Papa Roach</h3>
     <p>Between Angels, Last Resort</p>
   </div>
   <div class="artist-card" onclick="showSection('linkinpark')">
+    <span class="genre-icon">🌀</span>
     <h3>Linkin Park</h3>
     <p>Bleed It Out</p>
   </div>
   <div class="artist-card" onclick="showSection('tstm')">
+    <span class="genre-icon">🌌</span>
     <h3>Thirty Seconds to Mars</h3>
     <p>The Kill</p>
   </div>
   <div class="artist-card" onclick="showSection('korn')">
+    <span class="genre-icon">👹</span>
     <h3>Korn</h3>
     <p>Blind, Falling Away</p>
   </div>
   <div class="artist-card" onclick="showSection('chevelle')">
+    <span class="genre-icon">⚡</span>
     <h3>Chevelle</h3>
     <p>The Red, Send the Pain</p>
   </div>
   <div class="artist-card" onclick="showSection('fftl')">
+    <span class="genre-icon">💥</span>
     <h3>From First to Last</h3>
     <p>Note to Self</p>
   </div>
+  <div class="artist-card" onclick="showSection('slipknot')">
+    <span class="genre-icon">🎭</span>
+    <h3>Slipknot</h3>
+    <p>Wait and Bleed</p>
+  </div>
 </div>
-
-<!-- === SECCIONES INDIVIDUALES === -->
 
 <!-- BLINK-182 -->
 <section id="blink" class="preset-section">
@@ -526,6 +580,7 @@
       <tr><td rowspan="5" class="module">EQ & CAB</td><td class="param">Cabina</td><td>GREEN112</td><td>Marshall 4x12 Greenback</td></tr>
       <tr><td class="param">BASS</td><td>50</td><td>Cuerpo sin lodo</td></tr>
       <tr><td class="param">MID</td><td>65</td><td>Menos scooped</td></tr>
+      <tr><td class="param">TREBLE</td><td>60</td><td>Brillo controlado</td></tr
       <tr><td class="param">TREBLE</td><td>60</td><td>Brillo controlado</td></tr>
       <tr><td class="param">PRES</td><td>75</td><td>Corte en mezcla</td></tr>
       <tr><td rowspan="2" class="module">NGATE</td><td class="param">THRE</td><td>45</td><td>Ruido high-gain</td></tr>
@@ -539,6 +594,420 @@
       <tr><td rowspan="5" class="module">REVERB</td><td class="param">Tipo</td><td>ROOM</td><td>Ambiente corto</td></tr>
       <tr><td class="param">DECAY</td><td>30</td><td></td></tr>
       <tr><td class="param">MIX</td><td>20</td><td></td></tr>
+      <tr><td class="param">DAMP</td><td>50</td><td></td></tr>
+      <tr><td class="param">PREDLY</td><td>20 ms</td><td></td></tr>
+    </tbody>
+  </table>
+  <div class="note">🎸 <strong>VS15 Config:</strong> Gain 1 = 5–6 | Gain 2 = 0 | Bass = 5 | Treble = 5 | Contour = 12h</div>
+</section>
+
+<!-- SYSTEM OF A DOWN -->
+<section id="soad" class="preset-section">
+  <div class="section-header">
+    <h2>🎸 System of a Down – “Chop Suey!” / “Toxicity”</h2>
+    <button class="back-btn" onclick="showSection('home')">← Volver</button>
+  </div>
+  <div class="note">✅ <strong>1 solo preset</strong> para ambas canciones.<br>✅ <strong>No hay solo de guitarra</strong> → DELAY = OFF.<br>✅ <strong>VS15: Gain 2 = 0</strong></div>
+  <table>
+    <thead><tr><th>Módulo</th><th>Parámetro</th><th>Valor</th><th>Notas</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="3" class="module">COMP</td><td class="param">SUST</td><td>85</td><td>Compresión alta para metal moderno</td></tr>
+      <tr><td class="param">ATTACK</td><td>20</td><td>Ataque rápido para palm mute</td></tr>
+      <tr><td class="param">LEVEL</td><td>+6 dB</td><td>Compensa saturación</td></tr>
+      <tr><td rowspan="4" class="module">EFX</td><td class="param">Tipo</td><td>DISTORTION</td><td>Agresivo, sin compresión extra</td></tr>
+      <tr><td class="param">DRIVE</td><td>85</td><td></td></tr>
+      <tr><td class="param">TONE</td><td>55</td><td>Evita harshness</td></tr>
+      <tr><td class="param">LEVEL</td><td>90</td><td></td></tr>
+      <tr><td rowspan="5" class="module">AMP & DS</td><td class="param">Modelo</td><td>DUALRECT (B)</td><td>Mesa Boogie Lead</td></tr>
+      <tr><td class="param">LEAD</td><td>80</td><td></td></tr>
+      <tr><td class="param">GAIN</td><td>75</td><td></td></tr>
+      <tr><td class="param">POWER</td><td>65</td><td></td></tr>
+      <tr><td class="param">MASTER</td><td>90</td><td></td></tr>
+      <tr><td rowspan="5" class="module">EQ & CAB</td><td class="param">Cabina</td><td>RECT412</td><td>Mesa Boogie 4x12, ideal para punch y claridad</td></tr>
+      <tr><td class="param">BASS</td><td>45</td><td>Evita lodo con bajo y batería</td></tr>
+      <tr><td class="param">MID</td><td>55</td><td>Pegada rítmica</td></tr>
+      <tr><td class="param">TREBLE</td><td>75</td><td>Brillo controlado</td></tr>
+      <tr><td class="param">PRES</td><td>80</td><td>Realza presencia para corte en mezcla</td></tr>
+      <tr><td rowspan="2" class="module">NGATE</td><td class="param">THRE</td><td>65</td><td>Noise gate muy fuerte (esencial)</td></tr>
+      <tr><td class="param">DAMP</td><td>75</td><td></td></tr>
+      <tr><td class="module">MODFX</td><td class="param">Tipo</td><td>OFF</td><td></td></tr>
+      <tr><td class="module">DELAY</td><td class="param">Tipo</td><td>OFF</td><td>No hay solo → no hay delay</td></tr>
+      <tr><td class="module">REVERB</td><td class="param">Tipo</td><td>OFF</td><td>Sonido seco y agresivo</td></tr>
+    </tbody>
+  </table>
+  <div class="note">🎸 <strong>VS15 Config:</strong> Gain 1 = 5–6 | Gain 2 = 0 | Bass = 5 | Treble = 5 | Contour = 12h</div>
+</section>
+
+<!-- PAPA ROACH -->
+<section id="paparoch" class="preset-section">
+  <div class="section-header">
+    <h2>🎸 Papa Roach – “Between Angels and Insects” / “Last Resort”</h2>
+    <button class="back-btn" onclick="showSection('home')">← Volver</button>
+  </div>
+  <div class="note">✅ <strong>1 solo preset</strong> para ambas canciones.<br>✅ Basado en Marshall JCM800 + Mesa Boogie.<br>✅ <strong>VS15: Gain 2 = 0</strong></div>
+  <table>
+    <thead><tr><th>Módulo</th><th>Parámetro</th><th>Valor</th><th>Notas</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="3" class="module">COMP</td><td class="param">SUST</td><td>80</td><td>Compresión fuerte para sustain</td></tr>
+      <tr><td class="param">ATTACK</td><td>20</td><td>Rápido para palm mute</td></tr>
+      <tr><td class="param">LEVEL</td><td>+6 dB</td><td></td></tr>
+      <tr><td rowspan="5" class="module">EFX</td><td class="param">Tipo</td><td>SCREAMER</td><td>TS-9: boost en medios</td></tr>
+      <tr><td class="param">DRIVE</td><td>70</td><td></td></tr>
+      <tr><td class="param">MIDFY</td><td>75</td><td>¡Más medios!</td></tr>
+      <tr><td class="param">TONE</td><td>60</td><td></td></tr>
+      <tr><td class="param">LEVEL</td><td>90</td><td></td></tr>
+      <tr><td rowspan="5" class="module">AMP & DS</td><td class="param">Modelo</td><td>80'S 100W (B)</td><td>JCM800 Lead</td></tr>
+      <tr><td class="param">NORMAL</td><td>65</td><td>Pre-gain</td></tr>
+      <tr><td class="param">GAIN</td><td>75</td><td>Post-gain</td></tr>
+      <tr><td class="param">POWER</td><td>60</td><td>Calor de potencia</td></tr>
+      <tr><td class="param">MASTER</td><td>90</td><td></td></tr>
+      <tr><td rowspan="5" class="module">EQ & CAB</td><td class="param">Cabina</td><td>BRIT112</td><td>Vox AC30 2x12</td></tr>
+      <tr><td class="param">BASS</td><td>45</td><td>Evita lodo</td></tr>
+      <tr><td class="param">MID</td><td>70</td><td>Esencia punk-nu-metal</td></tr>
+      <tr><td class="param">TREBLE</td><td>75</td><td>Brillo característico</td></tr>
+      <tr><td class="param">PRES</td><td>80</td><td>Corte en mezcla</td></tr>
+      <tr><td rowspan="2" class="module">NGATE</td><td class="param">THRE</td><td>60</td><td>Noise gate fuerte</td></tr>
+      <tr><td class="param">DAMP</td><td>70</td><td></td></tr>
+      <tr><td class="module">MODFX</td><td class="param">Tipo</td><td>OFF</td><td>Sonido seco y directo</td></tr>
+      <tr><td class="module">DELAY</td><td class="param">Tipo</td><td>OFF</td><td></td></tr>
+      <tr><td class="module">REVERB</td><td class="param">Tipo</td><td>OFF</td><td></td></tr>
+    </tbody>
+  </table>
+  <div class="note">🎸 <strong>VS15 Config:</strong> Gain 1 = 5–6 | Gain 2 = 0 | Bass = 5 | Treble = 5 | Contour = 12h<br>🔁 <strong>1 preset para ambas canciones.</strong> ¡La intensidad está en tu palm mute y ataque!</div>
+</section>
+
+<!-- LINKIN PARK -->
+<section id="linkinpark" class="preset-section">
+  <div class="section-header">
+    <h2>🎸 Linkin Park – “Bleed It Out”</h2>
+    <button class="back-btn" onclick="showSection('home')">← Volver</button>
+  </div>
+  <div class="note">✅ <strong>1 solo preset</strong> para toda la canción.<br>✅ Basado en <strong>Mesa Boogie / Marshall</strong> con afinación baja (Drop C#).<br>✅ <strong>VS15: Gain 2 = 0</strong>| El MFX-10 genera todo el tono.<br>✅ <strong>No hay delay ni reverb</strong> → sonido seco y técnico.</div>
+  <table>
+    <thead><tr><th>Módulo</th><th>Parámetro</th><th>Valor</th><th>Notas</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="3" class="module">COMP</td><td class="param">SUST</td><td>65</td><td></td></tr>
+      <tr><td class="param">ATTACK</td><td>25</td><td>Rápido para palm mute</td></tr>
+      <tr><td class="param">LEVEL</td><td>+6 dB</td><td></td></tr>
+      <tr><td rowspan="4" class="module">EFX</td><td class="param">Tipo</td><td>METALZ</td><td>High-gain moderno</td></tr>
+      <tr><td class="param">DRIVE</td><td>90</td><td></td></tr>
+      <tr><td class="param">TONE</td><td>50</td><td>Evita harshness</td></tr>
+      <tr><td class="param">LEVEL</td><td>95</td><td></td></tr>
+      <tr><td rowspan="5" class="module">AMP & DS</td><td class="param">Modelo</td><td>DUALRECT (B)</td><td>Mesa Lead</td></tr>
+      <tr><td class="param">LEAD</td><td>85</td><td></td></tr>
+      <tr><td class="param">GAIN</td><td>80</td><td></td></tr>
+      <tr><td class="param">POWER</td><td>70</td><td></td></tr>
+      <tr><td class="param">MASTER</td><td>95</td><td></td></tr>
+      <tr><td rowspan="5" class="module">EQ & CAB</td><td class="param">Cabina</td><td>RECT412</td><td>Mesa 4x12</td></tr>
+      <tr><td class="param">BASS</td><td>50</td><td>Cuerpo sin lodo</td></tr>
+      <tr><td class="param">MID</td><td>62</td><td>¡Medios presentes!</td></tr>
+      <tr><td class="param">TREBLE</td><td>60</td><td>Brillo controlado</td></tr>
+      <tr><td class="param">PRES</td><td>75</td><td>Corte en mezcla</td></tr>
+      <tr><td rowspan="2" class="module">NGATE</td><td class="param">THRE</td><td>60</td><td>Ruido high-gain</td></tr>
+      <tr><td class="param">DAMP</td><td>75</td><td></td></tr>
+      <tr><td class="module">MODFX</td><td class="param">Tipo</td><td>OFF</td><td></td></tr>
+      <tr><td class="module">DELAY</td><td class="param">Tipo</td><td>OFF</td><td>Riff completamente seco</td></tr>
+      <tr><td class="module">REVERB</td><td class="param">Tipo</td><td>OFF</td><td>VS15 no tiene reverb, y la canción no la usa</td></tr>
+    </tbody>
+  </table>
+  <div class="note">🎸 <strong>VS15 Config:</strong> Gain 1 = 5–6 | Gain 2 = 0 | Bass = 6 | Treble = 5 | Contour = 12h<br>🔁 <strong>1 solo preset</strong> para toda la canción. ¡La dinámica está en tu técnica!</div>
+</section>
+
+<!-- THIRTY SECONDS TO MARS -->
+<section id="tstm" class="preset-section">
+  <div class="section-header">
+    <h2>🎸 Thirty Seconds to Mars – “The Kill”</h2>
+    <button class="back-btn" onclick="showSection('home')">← Volver</button>
+  </div>
+  <div class="note">✅ <strong>Preset L</strong>: “Limpio Atmosférico” (Intro / Verso)<br>✅ <strong>Preset C</strong>: “Riff Distorsionado” (Coro / Clímax)<br>✅ <strong>VS15: Gain 2 = 0</strong></div>
+
+  <!-- Preset L -->
+  <h3 style="color: #4CAF50; margin: 20px 0 10px;">Preset L – “Limpio Atmosférico”</h3>
+  <table>
+    <thead><tr><th>Módulo</th><th>Parámetro</th><th>Valor</th><th>Notas</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="3" class="module">COMP</td><td class="param">SUST</td><td>70</td><td></td></tr>
+      <tr><td class="param">ATTACK</td><td>35</td><td></td></tr>
+      <tr><td class="param">LEVEL</td><td>+4 dB</td><td></td></tr>
+      <tr><td rowspan="5" class="module">EFX</td><td class="param">Tipo</td><td>VINTAGE OD</td><td>Overdrive cálido</td></tr>
+      <tr><td class="param">DRIVE</td><td>45</td><td></td></tr>
+      <tr><td class="param">TONE</td><td>65</td><td></td></tr>
+      <tr><td class="param">LEVEL</td><td>80</td><td></td></tr>
+      <tr><td class="param">MIDFY</td><td>70</td><td></td></tr>
+      <tr><td rowspan="5" class="module">AMP & DS</td><td class="param">Modelo</td><td>BLACKFACE (A)</td><td>Fender Twin</td></tr>
+      <tr><td class="param">NORMAL</td><td>75</td><td></td></tr>
+      <tr><td class="param">BRIGHT</td><td>0</td><td></td></tr>
+      <tr><td class="param">POWER</td><td>30</td><td></td></tr>
+      <tr><td class="param">MASTER</td><td>85</td><td></td></tr>
+      <tr><td rowspan="5" class="module">EQ & CAB</td><td class="param">Cabina</td><td>BLACK210</td><td>Fender 2x10 → claridad y cuerpo</td></tr>
+      <tr><td class="param">BASS</td><td>50</td><td>Equilibrado</td></tr>
+      <tr><td class="param">MID</td><td>60</td><td>Claridad armónica</td></tr>
+      <tr><td class="param">TREBLE</td><td>65</td><td>Brillo vocal</td></tr>
+      <tr><td class="param">PRES</td><td>60</td><td>Neutro</td></tr>
+      <tr><td rowspan="2" class="module">NGATE</td><td class="param">THRE</td><td>20</td><td></td></tr>
+      <tr><td class="param">DAMP</td><td>30</td><td></td></tr>
+      <tr><td rowspan="5" class="module">DELAY</td><td class="param">Tipo</td><td>TAPE DELAY</td><td>Atmósfera vintage</td></tr>
+      <tr><td class="param">TIME</td><td>520 ms</td><td>Delay largo</td></tr>
+      <tr><td class="param">REPEAT</td><td>40</td><td></td></tr>
+      <tr><td class="param">MIX</td><td>35</td><td>Pronunciado pero no dominante</td></tr>
+      <tr><td class="param">TONE</td><td>50</td><td>Agudos suaves</td></tr>
+      <tr><td rowspan="5" class="module">REVERB</td><td class="param">Tipo</td><td>HALL</td><td>Reverb espaciosa (como en estudio)</td></tr>
+      <tr><td class="param">DECAY</td><td>70</td><td>Larga, pero no infinita</td></tr>
+      <tr><td class="param">MIX</td><td>45</td><td>Ambiente envolvente</td></tr>
+      <tr><td class="param">DAMP</td><td>40</td><td>Evita harshness</td></tr>
+      <tr><td class="param">PREDLY</td><td>30 ms</td><td>Separación natural</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Preset C -->
+  <h3 style="color: #4CAF50; margin: 20px 0 10px;">Preset C – “Riff Distorsionado” (Coro / Clímax)</h3>
+  <table>
+    <thead><tr><th>Módulo</th><th>Parámetro</th><th>Valor</th><th>Notas</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="3" class="module">COMP</td><td class="param">SUST</td><td>80</td><td></td></tr>
+      <tr><td class="param">ATTACK</td><td>20</td><td></td></tr>
+      <tr><td class="param">LEVEL</td><td>+6 dB</td><td></td></tr>
+      <tr><td rowspan="5" class="module">EFX</td><td class="param">Tipo</td><td>SCREAMER</td><td>TS-boost en medios</td></tr>
+      <tr><td class="param">DRIVE</td><td>70</td><td></td></tr>
+      <tr><td class="param">MIDFY</td><td>75</td><td>¡Más medios!</td></tr>
+      <tr><td class="param">TONE</td><td>60</td><td></td></tr>
+      <tr><td class="param">LEVEL</td><td>90</td><td></td></tr>
+      <tr><td rowspan="5" class="module">AMP & DS</td><td class="param">Modelo</td><td>80'S 100W (A)</td><td>Marshall JCM800</td></tr>
+      <tr><td class="param">NORMAL</td><td>80</td><td></td></tr>
+      <tr><td class="param">POWER</td><td>60</td><td></td></tr>
+      <tr><td class="param">MASTER</td><td>90</td><td></td></tr>
+      <tr><td class="param">BRIGHT</td><td>60</td><td></td></tr>
+      <tr><td rowspan="5" class="module">EQ & CAB</td><td class="param">Cabina</td><td>BRIT112</td><td>Vox AC30 2x12</td></tr>
+      <tr><td class="param">BASS</td><td>45</td><td>Evita lodo</td></tr>
+      <tr><td class="param">MID</td><td>70</td><td>Pegada rítmica</td></tr>
+      <tr><td class="param">TREBLE</td><td>75</td><td>Brillo característico</td></tr>
+      <tr><td class="param">PRES</td><td>80</td><td>Corte en mezcla</td></tr>
+      <tr><td rowspan="2" class="module">NGATE</td><td class="param">THRE</td><td>25</td><td></td></tr>
+      <tr><td class="param">DAMP</td><td>40</td><td></td></tr>
+      <tr><td class="module">MODFX</td><td class="param">Tipo</td><td>OFF</td><td></td></tr>
+      <tr><td class="module">DELAY</td><td class="param">Tipo</td><td>OFF</td><td></td></tr>
+      <tr><td rowspan="5" class="module">REVERB</td><td class="param">Tipo</td><td>ROOM</td><td></td></tr>
+      <tr><td class="param">DECAY</td><td>30</td><td></td></tr>
+      <tr><td class="param">MIX</td><td>25</td><td></td></tr>
+      <tr><td class="param">DAMP</td><td>50</td><td></td></tr>
+      <tr><td class="param">PREDLY</td><td>20 ms</td><td></td></tr>
+    </tbody>
+  </table>
+  <div class="note">🎸 <strong>VS15 Config:</strong> Gain 1 = 5–6 | Gain 2 = 0 | Bass = 5 | Treble = 6 | Contour = 12h<br>🔁 Cambia de <strong>Preset L → C</strong> en coro.</div>
+</section>
+
+<!-- KORN -->
+<section id="korn" class="preset-section">
+  <div class="section-header">
+    <h2>🎸 Korn – “Blind” / “Falling Away From Me”</h2>
+    <button class="back-btn" onclick="showSection('home')">← Volver</button>
+  </div>
+  <div class="note">✅ <strong>Preset 1</strong>: “Blind” → riff con AUTO WAH y distorsión gruesa.<br>✅ <strong>Preset 2L</strong>: “Falling Away From Me” – Verso → limpio atmosférico.<br>✅ <strong>Preset 2C</strong>: “Falling Away From Me” – Coro → riff distorsionado.<br>✅ <strong>VS15: Gain 2 = 0</strong>| El MFX-10 genera todo el tono.</div>
+
+  <!-- Preset 1 -->
+  <h3 style="color: #4CAF50; margin: 20px 0 10px;">Preset 1 – “Blind” (Riff con Auto-Wah)</h3>
+  <table>
+    <thead><tr><th>Módulo</th><th>Parámetro</th><th>Valor</th><th>Notas</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="3" class="module">COMP</td><td class="param">SUST</td><td>80</td><td></td></tr>
+      <tr><td class="param">ATTACK</td><td>20</td><td></td></tr>
+      <tr><td class="param">LEVEL</td><td>+6 dB</td><td></td></tr>
+      <tr><td rowspan="5" class="module">EFX</td><td class="param">Tipo</td><td>AUTO WAH</td><td>Wah automático con LFO</td></tr>
+      <tr><td class="param">TYPE</td><td>FILTER</td><td></td></tr>
+      <tr><td class="param">SPEED</td><td>4.2 Hz</td><td>Ritmo del riff</td></tr>
+      <tr><td class="param">DEPTH</td><td>75</td><td>Intensidad del wah</td></tr>
+      <tr><td class="param">LEVEL</td><td>85</td><td></td></tr>
+      <tr><td rowspan="4" class="module">AMP & DS</td><td class="param">Modelo</td><td>FUZZ</td><td>Fuzz grueso moderno</td></tr>
+      <tr><td class="param">GAIN A</td><td>90</td><td></td></tr>
+      <tr><td class="param">TONE</td><td>45</td><td>Evita harshness</td></tr>
+      <tr><td class="param">LEVEL</td><td>95</td><td></td></tr>
+      <tr><td class="module">EQ & CAB</td><td class="param">Cabina</td><td>OFF</td><td>Fuzz suena mejor sin cabina</td></tr>
+      <tr><td class="module">NGATE</td><td class="param">THRE</td><td>50</td><td></td></tr>
+      <tr><td class="module">NGATE</td><td class="param">DAMP</td><td>60</td><td></td></tr>
+      <tr><td class="module">MODFX</td><td class="param">Tipo</td><td>OFF</td><td></td></tr>
+      <tr><td class="module">DELAY</td><td class="param">Tipo</td><td>OFF</td><td></td></tr>
+      <tr><td class="module">REVERB</td><td class="param">Tipo</td><td>OFF</td><td></td></tr>
+    </tbody>
+  </table>
+
+  <!-- Preset 2L -->
+  <h3 style="color: #4CAF50; margin: 20px 0 10px;">Preset 2L – “Falling Away From Me” (Verso – Limpio con delay)</h3>
+  <table>
+    <thead><tr><th>Módulo</th><th>Parámetro</th><th>Valor</th><th>Notas</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="3" class="module">COMP</td><td class="param">SUST</td><td>75</td><td>Compresión media para sustain suave</td></tr>
+      <tr><td class="param">ATTACK</td><td>35</td><td>Ataque natural</td></tr>
+      <tr><td class="param">LEVEL</td><td>+4 dB</td><td>Nivel constante</td></tr>
+      <tr><td class="module">EFX</td><td class="param">Tipo</td><td>OFF</td><td></td></tr>
+      <tr><td rowspan="5" class="module">AMP & DS</td><td class="param">Modelo</td><td>BLACKFACE (A)</td><td>Fender Twin limpio</td></tr>
+      <tr><td class="param">NORMAL</td><td>70</td><td></td></tr>
+      <tr><td class="param">BRIGHT</td><td>0</td><td></td></tr>
+      <tr><td class="param">POWER</td><td>20</td><td></td></tr>
+      <tr><td class="param">MASTER</td><td>80</td><td></td></tr>
+      <tr><td rowspan="5" class="module">EQ & CAB</td><td class="param">Cabina</td><td>BLACK210</td><td></td></tr>
+      <tr><td class="param">BASS</td><td>55</td><td></td></tr>
+      <tr><td class="param">MID</td><td>50</td><td></td></tr>
+      <tr><td class="param">TREBLE</td><td>60</td><td></td></tr>
+      <tr><td class="param">PRES</td><td>55</td><td></td></tr>
+      <tr><td class="module">NGATE</td><td class="param">THRE</td><td>20</td><td></td></tr>
+      <tr><td class="module">NGATE</td><td class="param">DAMP</td><td>30</td><td></td></tr>
+      <tr><td class="module">MODFX</td><td class="param">Tipo</td><td>OFF</td><td></td></tr>
+      <tr><td rowspan="5" class="module">DELAY</td><td class="param">Tipo</td><td>TAPE DELAY</td><td>Atmósfera vintage</td></tr>
+      <tr><td class="param">TIME</td><td>480 ms</td><td></td></tr>
+      <tr><td class="param">REPEAT</td><td>35</td><td></td></tr>
+      <tr><td class="param">MIX</td><td>30</td><td></td></tr>
+      <tr><td class="param">TONE</td><td>50</td><td></td></tr>
+      <tr><td rowspan="5" class="module">REVERB</td><td class="param">Tipo</td><td>HALL</td><td></td></tr>
+      <tr><td class="param">DECAY</td><td>65</td><td></td></tr>
+      <tr><td class="param">MIX</td><td>40</td><td></td></tr>
+      <tr><td class="param">DAMP</td><td>45</td><td></td></tr>
+      <tr><td class="param">PREDLY</td><td>25 ms</td><td></td></tr>
+    </tbody>
+  </table>
+
+  <!-- Preset 2C -->
+  <h3 style="color: #4CAF50; margin: 20px 0 10px;">Preset 2C – “Falling Away From Me” (Coro – Distorsionado)</h3>
+  <table>
+    <thead><tr><th>Módulo</th><th>Parámetro</th><th>Valor</th><th>Notas</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="3" class="module">COMP</td><td class="param">SUST</td><td>85</td><td>Compresión alta</td></tr>
+      <tr><td class="param">ATTACK</td><td>15</td><td>Rápido para palm mute</td></tr>
+      <tr><td class="param">LEVEL</td><td>+6 dB</td><td>Compensa pérdida</td></tr>
+      <tr><td rowspan="4" class="module">EFX</td><td class="param">Tipo</td><td>DISTORTION</td><td></td></tr>
+      <tr><td class="param">DRIVE</td><td>90</td><td></td></tr>
+      <tr><td class="param">TONE</td><td>50</td><td></td></tr>
+      <tr><td class="param">LEVEL</td><td>95</td><td></td></tr>
+      <tr><td rowspan="5" class="module">AMP & DS</td><td class="param">Modelo</td><td>DUALRECT (B)</td><td></td></tr>
+      <tr><td class="param">LEAD</td><td>85</td><td></td></tr>
+      <tr><td class="param">GAIN</td><td>80</td><td></td></tr>
+      <tr><td class="param">POWER</td><td>70</td><td></td></tr>
+      <tr><td class="param">MASTER</td><td>95</td><td></td></tr>
+      <tr><td rowspan="5" class="module">EQ & CAB</td><td class="param">Cabina</td><td>RECT412</td><td></td></tr>
+      <tr><td class="param">BASS</td><td>50</td><td></td></tr>
+      <tr><td class="param">MID</td><td>60</td><td></td></tr>
+      <tr><td class="param">TREBLE</td><td>65</td><td></td></tr>
+      <tr><td class="param">PRES</td><td>75</td><td></td></tr>
+      <tr><td class="module">NGATE</td><td class="param">THRE</td><td>65</td><td></td></tr>
+      <tr><td class="module">NGATE</td><td class="param">DAMP</td><td>75</td><td></td></tr>
+      <tr><td class="module">MODFX</td><td class="param">Tipo</td><td>OFF</td><td></td></tr>
+      <tr><td class="module">DELAY</td><td class="param">Tipo</td><td>OFF</td><td></td></tr>
+      <tr><td class="module">REVERB</td><td class="param">Tipo</td><td>OFF</td><td></td></tr>
+    </tbody>
+  </table>
+  <div class="note">🎸 <strong>VS15 Config:</strong> Gain 1 = 5–6 | Gain 2 = 0 | Bass = 5 | Treble = 5 | Contour = 12h<br>🔁 “Falling Away From Me”: cambia de <strong>Preset 2L → 2C</strong> en coro.</div>
+</section>
+
+<!-- CHEVELLE -->
+<section id="chevelle" class="preset-section">
+  <div class="section-header">
+    <h2>🎸 Chevelle – “The Red” / “Send the Pain Below”</h2>
+    <button class="back-btn" onclick="showSection('home')">← Volver</button>
+  </div>
+  <div class="note">✅ <strong>Preset L</strong>: Verso → tono limpio con delay/reverb atmosféricos.<br>✅ <strong>Preset C</strong>: Coro → riff distorsionado con palm mute agresivo.<br>✅ <strong>VS15: Gain 2 = 0</strong>| El MFX-10 genera todo el tono.</div>
+
+  <!-- Preset L -->
+  <h3 style="color: #4CAF50; margin: 20px 0 10px;">Preset L – “Verso”</h3>
+  <table>
+    <thead><tr><th>Módulo</th><th>Parámetro</th><th>Valor</th><th>Notas</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="3" class="module">COMP</td><td class="param">SUST</td><td>70</td><td></td></tr>
+      <tr><td class="param">ATTACK</td><td>35</td><td></td></tr>
+      <tr><td class="param">LEVEL</td><td>+4 dB</td><td></td></tr>
+      <tr><td class="module">EFX</td><td class="param">Tipo</td><td>OFF</td><td></td></tr>
+      <tr><td rowspan="5" class="module">AMP & DS</td><td class="param">Modelo</td><td>BLACKFACE (A)</td><td>Fender Twin limpio</td></tr>
+      <tr><td class="param">NORMAL</td><td>75</td><td></td></tr>
+      <tr><td class="param">BRIGHT</td><td>0</td><td></td></tr>
+      <tr><td class="param">POWER</td><td>25</td><td></td></tr>
+      <tr><td class="param">MASTER</td><td>85</td><td></td></tr>
+      <tr><td rowspan="5" class="module">EQ & CAB</td><td class="param">Cabina</td><td>BLACK210</td><td>Fender 2x10</td></tr>
+      <tr><td class="param">BASS</td><td>50</td><td></td></tr>
+      <tr><td class="param">MID</td><td>60</td><td></td></tr>
+      <tr><td class="param">TREBLE</td><td>65</td><td></td></tr>
+      <tr><td class="param">PRES</td><td>60</td><td></td></tr>
+      <tr><td class="module">NGATE</td><td class="param">THRE</td><td>15</td><td></td></tr>
+      <tr><td class="module">NGATE</td><td class="param">DAMP</td><td>30</td><td></td></tr>
+      <tr><td class="module">MODFX</td><td class="param">Tipo</td><td>OFF</td><td></td></tr>
+      <tr><td rowspan="5" class="module">DELAY</td><td class="param">Tipo</td><td>TAPE DELAY</td><td>Eco vintage</td></tr>
+      <tr><td class="param">TIME</td><td>500 ms</td><td></td></tr>
+      <tr><td class="param">REPEAT</td><td>40</td><td></td></tr>
+      <tr><td class="param">MIX</td><td>35</td><td></td></tr>
+      <tr><td class="param">TONE</td><td>50</td><td></td></tr>
+      <tr><td rowspan="5" class="module">REVERB</td><td class="param">Tipo</td><td>HALL</td><td>Ambiente espacioso</td></tr>
+      <tr><td class="param">DECAY</td><td>70</td><td></td></tr>
+      <tr><td class="param">MIX</td><td>45</td><td></td></tr>
+      <tr><td class="param">DAMP</td><td>40</td><td></td></tr>
+      <tr><td class="param">PREDLY</td><td>30 ms</td><td></td></tr>
+    </tbody>
+  </table>
+
+  <!-- Preset C -->
+  <h3 style="color: #4CAF50; margin: 20px 0 10px;">Preset C – “Coro” (Distorsionado con palm mute)</h3>
+  <table>
+    <thead><tr><th>Módulo</th><th>Parámetro</th><th>Valor</th><th>Notas</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="3" class="module">COMP</td><td class="param">SUST</td><td>85</td><td>Compresión alta para pegada rítmica</td></tr>
+      <tr><td class="param">ATTACK</td><td>20</td><td>Ataque rápido para palm mute</td></tr>
+      <tr><td class="param">LEVEL</td><td>+6 dB</td><td></td></tr>
+      <tr><td rowspan="5" class="module">EFX</td><td class="param">Tipo</td><td>SCREAMER</td><td>TS-boost en medios</td></tr>
+      <tr><td class="param">DRIVE</td><td>70</td><td></td></tr>
+      <tr><td class="param">MIDFY</td><td>75</td><td>¡Más medios!</td></tr>
+      <tr><td class="param">TONE</td><td>60</td><td></td></tr>
+      <tr><td class="param">LEVEL</td><td>90</td><td>Volumen para coros</td></tr>
+      <tr><td rowspan="5" class="module">AMP & DS</td><td class="param">Modelo</td><td>80'S 100W (A)</td><td>Marshall JCM800</td></tr>
+      <tr><td class="param">NORMAL</td><td>80</td><td></td></tr>
+      <tr><td class="param">POWER</td><td>60</td><td></td></tr>
+      <tr><td class="param">MASTER</td><td>90</td><td></td></tr>
+      <tr><td class="param">BRIGHT</td><td>60</td><td></td></tr>
+      <tr><td rowspan="5" class="module">EQ & CAB</td><td class="param">Cabina</td><td>BRIT112</td><td>Vox AC30 2x12</td></tr>
+      <tr><td class="param">BASS</td><td>45</td><td>Evita lodo</td></tr>
+      <tr><td class="param">MID</td><td>70</td><td>Pegada rítmica</td></tr>
+      <tr><td class="param">TREBLE</td><td>75</td><td>Brillo característico</td></tr>
+      <tr><td class="param">PRES</td><td>80</td><td>Corte en mezcla</td></tr>
+      <tr><td class="module">NGATE</td><td class="param">THRE</td><td>25</td><td>Ruido de fondo en single-coil</td></tr>
+      <tr><td class="module">NGATE</td><td class="param">DAMP</td><td>40</td><td></td></tr>
+      <tr><td class="module">MODFX</td><td class="param">Tipo</td><td>OFF</td><td></td></tr>
+      <tr><td class="module">DELAY</td><td class="param">Tipo</td><td>OFF</td><td></td></tr>
+      <tr><td rowspan="5" class="module">REVERB</td><td class="param">Tipo</td><td>ROOM</td><td></td></tr>
+      <tr><td class="param">DECAY</td><td>30</td><td></td></tr>
+      <tr><td class="param">MIX</td><td>25</td><td></td></tr>
+      <tr><td class="param">DAMP</td><td>50</td><td></td></tr>
+      <tr><td class="param">PREDLY</td><td>20 ms</td><td></td></tr>
+    </tbody>
+  </table>
+  <div class="note">🎸 <strong>VS15 Config:</strong> Gain 1 = 5–6 | Gain 2 = 0 | Bass = 5 | Treble = 6 | Contour = 12h</div>
+</section>
+
+<!-- FROM FIRST TO LAST -->
+<section id="fftl" class="preset-section">
+  <div class="section-header">
+    <h2>🎸 From First to Last – “Note to Self”</h2>
+    <button class="back-btn" onclick="showSection('home')">← Volver</button>
+  </div>
+  <div class="note">✅ <strong>1 solo preset</strong> para toda la canción.<br>✅ Estilo post-hardcore melódico con drive saturado pero articulado.<br>✅ <strong>VS15: Gain 2 = 0</strong></div>
+  <table>
+    <thead><tr><th>Módulo</th><th>Parámetro</th><th>Valor</th><th>Notas</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="3" class="module">COMP</td><td class="param">SUST</td><td>75</td><td>Compresión media para sustain</td></tr>
+      <tr><td class="param">ATTACK</td><td>30</td><td>Ataque natural</td></tr>
+      <tr><td class="param">LEVEL</td><td>+5 dB</td><td></td></tr>
+      <tr><td rowspan="4" class="module">EFX</td><td class="param">Tipo</td><td>OVERDRIVE</td><td>No Vintage OD: se prefiere modelo plano para claridad</td></tr>
+      <tr><td class="param">DRIVE</td><td>65</td><td>Drive suave con brillo</td></tr>
+      <tr><td class="param">TONE</td><td>75</td><td>Refuerza agudos para corte en mezcla</td></tr>
+      <tr><td class="param">LEVEL</td><td>80</td><td>Asegura impulso al ampli</td></tr>
+      <tr><td rowspan="5" class="module">AMP & DS</td><td class="param">Modelo</td><td>80'S 100W (A)</td><td>Marshall
+      <tr><td class="param">TREBLE</td><td>60</td><td>Brillo controlado</td></tr>
+      <tr><td class="param">PRES</td><td>75</td><td>Corte en mezcla</td></tr>
+      <tr><td rowspan="2" class="module">NGATE</td><td class="param">THRE</td><td>60</td><td>Noise gate fuerte (esencial)</td></tr>
+      <tr><td class="param">DAMP</td><td>70</td><td>Silencio total entre notas</td></tr>
+      <tr><td class="module">MODFX</td><td class="param">Tipo</td><td>OFF</td><td>No se usa modulación</td></tr>
+      <tr><td rowspan="5" class="module">DELAY</td><td class="param">Tipo</td><td>ANALOG DLY</td><td>Eco sutil tipo slapback</td></tr>
+      <tr><td class="param">TIME</td><td>300 ms</td><td>Eco de fondo (intro Bat Country)</td></tr>
+      <tr><td class="param">REPEAT</td><td>20</td><td>1–2 repeticiones perceptibles</td></tr>
+      <tr><td class="param">MIX</td><td>20</td><td>Muy sutil</td></tr>
+      <tr><td class="param">TONE</td><td>60</td><td>Agudos suaves</td></tr>
+      <tr><td rowspan="5" class="module">REVERB</td><td class="param">Tipo</td><td>ROOM</td><td>Ambiente corto (VS15 no tiene reverb)</td></tr>
+      <tr><td class="param">DECAY</td><td>35</td><td></td></tr>
+      <tr><td class="param">MIX</td><td>25</td><td></td></tr>
       <tr><td class="param">DAMP</td><td>50</td><td></td></tr>
       <tr><td class="param">PREDLY</td><td>20 ms</td><td></td></tr>
     </tbody>
@@ -959,12 +1428,53 @@
       <tr><td class="param">TONE</td><td>65</td><td>Agudos suaves</td></tr>
       <tr><td rowspan="5" class="module">REVERB</td><td class="param">Tipo</td><td>ROOM</td><td>Ambiente ligero</td></tr>
       <tr><td class="param">DECAY</td><td>35</td><td></td></tr>
+      <tr><td class="param">MIX</td><td>25</td><td></td></tr>
       <tr><td class="param">DAMP</td><td>50</td><td></td></tr>
       <tr><td class="param">PREDLY</td><td>20 ms</td><td></td></tr>
-      <tr><td class="param">MIX</td><td>25</td><td></td></tr>
     </tbody>
   </table>
   <div class="note">🎸 <strong>VS15 Config:</strong> Gain 1 = 5–6 | Gain 2 = 0 | Bass = 5 | Treble = 6 | Contour = 12h<br>🔁 <strong>1 solo preset</strong> para toda la canción. ¡La dinámica está en tu técnica!</div>
+</section>
+
+<!-- SLIPKNOT -->
+<section id="slipknot" class="preset-section">
+  <div class="section-header">
+    <h2>🎸 Slipknot – “Wait and Bleed”</h2>
+    <button class="back-btn" onclick="showSection('home')">← Volver</button>
+  </div>
+  <div class="note">✅ <strong>1 solo preset</strong> para toda la canción.<br>✅ Basado en <strong>Mesa Boogie / Fortin</strong> con afinación baja (Drop B).<br>✅ <strong>VS15: Gain 2 = 0</strong>| El MFX-10 genera todo el tono.<br>✅ <strong>¡Medios presentes!</strong> (no scooped extremo) → definición rítmica clave.</div>
+  <table>
+    <thead><tr><th>Módulo</th><th>Parámetro</th><th>Valor</th><th>Notas</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="3" class="module">COMP</td><td class="param">SUST</td><td>75</td><td>Compresión media para sustain rítmico</td></tr>
+      <tr><td class="param">ATTACK</td><td>20</td><td>Rápido para palm mute tight</td></tr>
+      <tr><td class="param">LEVEL</td><td>+6 dB</td><td>Compensa pérdida de ganancia</td></tr>
+      <tr><td rowspan="4" class="module">EFX</td><td class="param">Tipo</td><td>METALZ</td><td>High-gain moderno (como Fortin/Mesa)</td></tr>
+      <tr><td class="param">DRIVE</td><td>90</td><td>Saturación alta, controlada</td></tr>
+      <tr><td class="param">TONE</td><td>50</td><td>Evita harshness en single-coil</td></tr>
+      <tr><td class="param">LEVEL</td><td>95</td><td>Volumen suficiente para empujar ampli</td></tr>
+      <tr><td rowspan="5" class="module">AMP & DS</td><td class="param">Modelo</td><td>DUALRECT (B)</td><td>Mesa Boogie Lead → tono de estudio real</td></tr>
+      <tr><td class="param">LEAD</td><td>85</td><td></td></tr>
+      <tr><td class="param">GAIN</td><td>80</td><td></td></tr>
+      <tr><td class="param">POWER</td><td>70</td><td>Calor de válvulas de potencia</td></tr>
+      <tr><td class="param">MASTER</td><td>95</td><td>Volumen de salida</td></tr>
+      <tr><td rowspan="5" class="module">EQ & CAB</td><td class="param">Cabina</td><td>RECT412</td><td>Mesa Boogie 4x12 → punch y definición</td></tr>
+      <tr><td class="param">BASS</td><td>50</td><td>Cuerpo sin lodo (compensa single-coil)</td></tr>
+      <tr><td class="param">MID</td><td>65</td><td>¡Medios presentes! (clave para corte rítmico)</td></tr>
+      <tr><td class="param">TREBLE</td><td>60</td><td>Brillo controlado</td></tr>
+      <tr><td class="param">PRES</td><td>75</td><td>Realza presencia para corte en mezcla</td></tr>
+      <tr><td rowspan="2" class="module">NGATE</td><td class="param">THRE</td><td>65</td><td>Noise gate muy fuerte (esencial en Drop B)</td></tr>
+      <tr><td class="param">DAMP</td><td>75</td><td>Silencio total entre notas</td></tr>
+      <tr><td class="module">MODFX</td><td class="param">Tipo</td><td>OFF</td><td>No se usa</td></tr>
+      <tr><td class="module">DELAY</td><td class="param">Tipo</td><td>OFF</td><td>Sonido seco y técnico</td></tr>
+      <tr><td rowspan="5" class="module">REVERB</td><td class="param">Tipo</td><td>ROOM</td><td>Ambiente corto (VS15 no tiene reverb)</td></tr>
+      <tr><td class="param">DECAY</td><td>25</td><td>Breve</td></tr>
+      <tr><td class="param">MIX</td><td>20</td><td>Sutil</td></tr>
+      <tr><td class="param">DAMP</td><td>60</td><td>Evita harshness</td></tr>
+      <tr><td class="param">PREDLY</td><td>15 ms</td><td>Separación natural</td></tr>
+    </tbody>
+  </table>
+  <div class="note">🎸 <strong>VS15 Config:</strong> Gain 1 = 5–6 | Gain 2 = 0 | Bass = 5 | Treble = 5 | Contour = 12h<br>🔁 <strong>1 solo preset</strong> para toda la canción. ¡La intensidad está en tu palm mute y ataque!</div>
 </section>
 
 <!-- FOOTER -->
